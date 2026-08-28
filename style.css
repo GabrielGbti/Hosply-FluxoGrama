@@ -1,0 +1,186 @@
+:root {
+    --bg-color: #0b0f19;
+    --card-bg: #111827;
+    
+    --purple-glow: #a855f7; /* Cor do Cliente/Gestor */
+    --cyan-glow: #00d4ff;   /* Cor da Plataforma HOSPLY e Fases */
+    --orange-glow: #f97316; /* Cor do Fornecedor */
+    
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #090d14;
+    color: var(--text-main);
+    margin: 0;
+    padding: 40px 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: #ffffff;
+}
+
+h1 span {
+    color: var(--cyan-glow);
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+header p {
+    color: #6b7280;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* Grid Principal */
+.flow-container {
+    display: grid;
+    grid-template-columns: 340px 40px 340px 40px 340px;
+    gap: 15px 20px;
+    align-items: center;
+    max-width: 1250px;
+}
+
+/* Cabeçalhos das Colunas */
+.col-title {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 1.2px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.title-purple { color: var(--purple-glow); grid-column: 1; text-shadow: 0 0 8px rgba(168, 85, 247, 0.3); }
+.title-cyan { color: var(--cyan-glow); grid-column: 3; text-shadow: 0 0 8px rgba(0, 212, 255, 0.3); }
+.title-orange { color: var(--orange-glow); grid-column: 5; text-shadow: 0 0 8px rgba(249, 115, 22, 0.3); }
+
+/* Divisor de Fases (Linhas normais restauradas) */
+.phase-divider {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0;
+    color: var(--cyan-glow);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    opacity: 0.8;
+    text-shadow: 0 0 5px rgba(0, 212, 255, 0.2);
+}
+
+.phase-divider i {
+    margin: 0 15px;
+    font-size: 1rem;
+}
+
+.phase-divider::before, .phase-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(0, 212, 255, 0.3); /* Restaurada a linha com opacidade sólida */
+    margin: 0 20px;
+}
+
+/* Estilo Base dos Cards (Brilho suave) */
+.card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 24px;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid #1f2937; 
+}
+
+.card:hover { 
+    transform: translateY(-2px); 
+}
+
+.card i.main-icon {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+}
+
+/* Variações de Cores e Brilho */
+.card-purple {
+    border-top: 3px solid var(--purple-glow);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.08); 
+}
+.card-purple i.main-icon { color: var(--purple-glow); }
+.card-purple:hover { box-shadow: 0 6px 20px rgba(168, 85, 247, 0.2); border-color: #1f2937; border-top-color: var(--purple-glow); }
+
+.card-cyan {
+    border-top: 3px solid var(--cyan-glow);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.08);
+    text-align: center;
+    align-items: center;
+}
+.card-cyan i.main-icon { color: var(--cyan-glow); }
+.card-cyan:hover { box-shadow: 0 6px 20px rgba(0, 212, 255, 0.2); border-color: #1f2937; border-top-color: var(--cyan-glow); }
+
+.card-orange {
+    border-top: 3px solid var(--orange-glow);
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.08);
+    text-align: right;
+    align-items: flex-end;
+}
+.card-orange i.main-icon { color: var(--orange-glow); }
+.card-orange:hover { box-shadow: 0 6px 20px rgba(249, 115, 22, 0.2); border-color: #1f2937; border-top-color: var(--orange-glow); }
+
+/* Textos */
+.card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+    color: #f3f4f6;
+}
+
+.card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Setas Horizontais */
+.arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.arrow-cyan { color: var(--cyan-glow); }
+.arrow-purple { color: var(--purple-glow); }
+.arrow-orange { color: var(--orange-glow); }
+
+@media (max-width: 1024px) {
+    .flow-container { grid-template-columns: 1fr; }
+    .col-title { display: none; }
+    .arrow, .phase-divider::before, .phase-divider::after { display: none; }
+    .card { height: auto; text-align: left !important; align-items: flex-start !important; margin-bottom: 10px; border-top-width: 1px; border-left-width: 3px; }
+}
