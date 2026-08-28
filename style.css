@@ -2,9 +2,9 @@
     --bg-color: #0b0f19;
     --card-bg: #111827;
     
-    --purple-glow: #a855f7;
-    --cyan-glow: #00d4ff;   
-    --orange-glow: #f97316; 
+    --purple-glow: #a855f7; /* Cor do Cliente/Gestor */
+    --cyan-glow: #00d4ff;   /* Cor da Plataforma HOSPLY e Fases */
+    --orange-glow: #f97316; /* Cor do Fornecedor */
     
     --text-main: #f3f4f6;
     --text-muted: #9ca3af;
@@ -24,7 +24,7 @@ body {
 
 header {
     text-align: center;
-    margin-bottom: 25px; /* Reduzido levemente o espaço inferior */
+    margin-bottom: 25px;
 }
 
 h1 {
@@ -59,9 +59,9 @@ header p {
     max-width: 1250px;
 }
 
-/* Cabeçalhos das Colunas */
+/* Cabeçalhos das Colunas (Desktop) */
 .col-title {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 600;
     text-transform: uppercase;
     text-align: center;
@@ -129,7 +129,7 @@ header p {
     margin-bottom: 12px;
 }
 
-/* Variações de Cores e Brilho */
+/* Variações de Cores e Brilho dos Cards */
 .card-purple {
     border-top: 3px solid var(--purple-glow);
     box-shadow: 0 4px 15px rgba(168, 85, 247, 0.08); 
@@ -170,7 +170,7 @@ header p {
     line-height: 1.4;
 }
 
-/* Setas Horizontais */
+/* Setas Horizontais (Desktop) */
 .arrow {
     display: flex;
     justify-content: center;
@@ -183,22 +183,27 @@ header p {
 .arrow-purple { color: var(--purple-glow); }
 .arrow-orange { color: var(--orange-glow); }
 
-/* Responsividade Mobile */
+
+/* ========================================= */
+/* RESPONSIVIDADE MOBILE (TELAS MENORES)     */
+/* ========================================= */
 @media (max-width: 1024px) {
-    /* Exibe a Legenda Mobile com estilo de botões */
+    
+    /* Legenda Mobile com visual de "Caixa/Painel" */
     .mobile-legend { 
         display: flex; 
         justify-content: center;
-        gap: 15px;
-        flex-wrap: wrap;
-        background: #111827;
-        padding: 12px 20px;
-        border-radius: 8px;
-        border: 1px solid #1f2937;
+        gap: 20px;
+        background-color: var(--card-bg); /* Fundo escuro */
+        padding: 12px 24px;
+        border-radius: 12px; /* Bordas arredondadas */
+        border: 1px solid #1f2937; /* Borda discreta */
         margin-bottom: 30px;
         width: 100%;
         max-width: 320px;
+        box-sizing: border-box;
     }
+    
     .m-leg-item {
         font-size: 0.85rem;
         font-weight: 600;
@@ -208,21 +213,35 @@ header p {
         gap: 6px;
     }
 
-    .flow-container { grid-template-columns: 1fr; }
-    .col-title { display: none; }
-    .arrow { display: none; }
+    .flow-container { 
+        grid-template-columns: 1fr; 
+        gap: 10px; 
+    }
+    
+    .col-title { display: none; } /* Oculta títulos do desktop */
+    
+    /* Mantém as setas, mas faz apontarem para baixo entre os cards */
+    .arrow { 
+        display: flex; 
+        margin: 5px 0;
+    }
+    
+    .arrow i {
+        transform: rotate(90deg); /* Vira a seta para baixo */
+    }
+    
     .phase-divider::before, .phase-divider::after { display: none; }
     
+    /* Transforma os cards para leitura vertical */
     .card { 
         height: auto; 
         text-align: left !important; 
         align-items: flex-start !important; 
-        margin-bottom: 12px; 
+        margin-bottom: 10px; 
         border-top-width: 1px; 
-        border-left-width: 4px; /* Move a borda colorida para a lateral na versão mobile para melhor identificação */
+        border-left-width: 4px; /* Move a borda colorida para a lateral */
     }
 
-    /* Ajusta as bordas coloridas para lateral no celular */
     .card-purple { border-left-color: var(--purple-glow); }
     .card-cyan { border-left-color: var(--cyan-glow); }
     .card-orange { border-left-color: var(--orange-glow); }
