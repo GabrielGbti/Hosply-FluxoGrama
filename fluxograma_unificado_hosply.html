@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluxograma Integrado - HOSPLY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #060913;
+            --surface-color: #0F172A;
+            --gestor-color: #38BDF8; /* Cyan */
+            --gestor-bg: rgba(56, 189, 248, 0.05);
+            --hosply-color: #A78BFA; /* Purple */
+            --hosply-bg: rgba(167, 139, 250, 0.05);
+            --fornecedor-color: #F97316; /* Orange */
+            --fornecedor-bg: rgba(249, 115, 22, 0.05);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 50%, rgba(249, 115, 22, 0.08) 0%, transparent 50%);
+            color: var(--text-main);
+            font-family: 'Urbanist', sans-serif;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 span {
+            color: var(--hosply-color);
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        /* FLOWCHART CONTAINER */
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 1400px;
+            position: relative;
+        }
+
+        /* SWIMLANE TITLES */
+        .swimlane-headers {
+            display: grid;
+            grid-template-columns: 1fr 60px 1fr 60px 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .swimlane-headers .gestor-title { color: var(--gestor-color); }
+        .swimlane-headers .hosply-title { color: var(--hosply-color); }
+        .swimlane-headers .fornecedor-title { color: var(--fornecedor-color); }
+
+        /* ROWS */
+        .flow-row {
+            display: grid;
+            grid-template-columns: 1fr 60px 1fr 60px 1fr;
+            gap: 10px;
+            align-items: center;
+            position: relative;
+        }
+
+        /* CARDS (NODES) */
+        .card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card.empty {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+
+        /* THEMES FOR CARDS */
+        .card.gestor {
+            border-left: 4px solid var(--gestor-color);
+            background: linear-gradient(90deg, var(--gestor-bg), transparent);
+        }
+        .card.gestor:hover { box-shadow: 0 10px 20px rgba(56, 189, 248, 0.15); }
+
+        .card.hosply {
+            border-left: 4px solid var(--hosply-color);
+            border-right: 4px solid var(--hosply-color);
+            background: linear-gradient(90deg, var(--hosply-bg), transparent, var(--hosply-bg));
+            text-align: center;
+            align-items: center;
+        }
+        .card.hosply:hover { box-shadow: 0 10px 20px rgba(167, 139, 250, 0.15); }
+
+        .card.fornecedor {
+            border-right: 4px solid var(--fornecedor-color);
+            background: linear-gradient(270deg, var(--fornecedor-bg), transparent);
+            text-align: right;
+        }
+        .card.fornecedor:hover { box-shadow: 0 10px 20px rgba(249, 115, 22, 0.15); }
+
+        /* CARD CONTENT */
+        .card-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+        .gestor .card-icon { color: var(--gestor-color); }
+        .hosply .card-icon { color: var(--hosply-color); }
+        .fornecedor .card-icon { color: var(--fornecedor-color); }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* CONNECTORS (ARROWS) */
+        .connector {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #475569;
+            z-index: 1;
+        }
+
+        .connector.right { color: var(--gestor-color); animation: pulseRight 2s infinite; }
+        .connector.left { color: var(--fornecedor-color); animation: pulseLeft 2s infinite; }
+        
+        .connector.hosply-left { color: var(--hosply-color); animation: pulseLeft 2s infinite; }
+        .connector.hosply-right { color: var(--hosply-color); animation: pulseRight 2s infinite; }
+
+        @keyframes pulseRight {
+            0% { transform: translateX(-5px); opacity: 0.5; }
+            50% { transform: translateX(5px); opacity: 1; }
+            100% { transform: translateX(-5px); opacity: 0.5; }
+        }
+        @keyframes pulseLeft {
+            0% { transform: translateX(5px); opacity: 0.5; }
+            50% { transform: translateX(-5px); opacity: 1; }
+            100% { transform: translateX(5px); opacity: 0.5; }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .swimlane-headers { display: none; }
+            .flow-row {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                padding-bottom: 30px;
+                border-bottom: 1px dashed var(--border-color);
+                margin-bottom: 30px;
+            }
+            .connector {
+                transform: rotate(90deg) !important;
+                margin: 10px 0;
+            }
+            .card.fornecedor { text-align: left; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Fluxograma Operacional <span>HOSPLY</span></h1>
+        <p>Visão integrada: A jornada do Cliente, a inteligência do Sistema e a resposta do Fornecedor.</p>
+    </div>
+
+    <div class="flowchart">
+        
+        <!-- Headers -->
+        <div class="swimlane-headers">
+            <div class="gestor-title"><i class="fa-solid fa-hospital-user"></i> Cliente / Gestor</div>
+            <div></div>
+            <div class="hosply-title"><i class="fa-solid fa-microchip"></i> Plataforma</div>
+            <div></div>
+            <div class="fornecedor-title"><i class="fa-solid fa-truck-fast"></i> Fornecedor</div>
+        </div>
+
+        <!-- ETAPA 1: Setup -->
+        <div class="flow-row">
+            <div class="card gestor">
+                <i class="fa-solid fa-user-plus card-icon"></i>
+                <div class="card-title">1. Acesso & Dashboard</div>
+                <div class="card-desc">Realiza cadastro/login e visualiza o painel de controle do hospital (RF-01, 02, 03).</div>
+            </div>
+            <div class="connector right"><i class="fa-solid fa-arrow-right-long"></i></div>
+            
+            <div class="card hosply">
+                <i class="fa-solid fa-shield-halved card-icon"></i>
+                <div class="card-title">Validação de Perfil</div>
+                <div class="card-desc">Autentica usuários e direciona para a interface correta.</div>
+            </div>
+            
+            <div class="connector left"><i class="fa-solid fa-arrow-left-long"></i></div>
+            <div class="card fornecedor">
+                <i class="fa-solid fa-boxes-stacked card-icon"></i>
+                <div class="card-title">1. Portfólio & Acesso</div>
+                <div class="card-desc">Realiza cadastro/login e adiciona seus produtos no catálogo (RF-01, 02, 10).</div>
+            </div>
+        </div>
+
+        <!-- ETAPA 2: O Gatilho -->
+        <div class="flow-row">
+            <div class="card gestor">
+                <i class="fa-solid fa-bell card-icon"></i>
+                <div class="card-title">2. Recebe Alerta</div>
+                <div class="card-desc">É notificado no painel de que um item está acabando.</div>
+            </div>
+            
+            <div class="connector hosply-left"><i class="fa-solid fa-arrow-left-long"></i></div>
+            
+            <div class="card hosply">
+                <i class="fa-solid fa-triangle-exclamation card-icon"></i>
+                <div class="card-title">Monitoramento Contínuo</div>
+                <div class="card-desc">Identifica estoque crítico e dispara o alerta automático (RF-04).</div>
+            </div>
+            
+            <div class="connector empty"></div>
+            <div class="card empty"></div>
+        </div>
+
+        <!-- ETAPA 3: A Demanda -->
+        <div class="flow-row">
+            <div class="card gestor">
+                <i class="fa-solid fa-file-circle-plus card-icon"></i>
+                <div class="card-title">3. Abre Solicitação</div>
+                <div class="card-desc">Registra o pedido de reposição com quantidade e prioridade (RF-06).</div>
+            </div>
+            
+            <div class="connector right"><i class="fa-solid fa-arrow-right-long"></i></div>
+            
+            <div class="card hosply">
+                <i class="fa-solid fa-tower-broadcast card-icon"></i>
+                <div class="card-title">Publicação de Demanda</div>
+                <div class="card-desc">Recebe a solicitação e publica para a rede de fornecedores compatíveis.</div>
+            </div>
+            
+            <div class="connector hosply-right"><i class="fa-solid fa-arrow-right-long"></i></div>
+            
+            <div class="card fornecedor">
+                <i class="fa-solid fa-magnifying-glass-chart card-icon"></i>
+                <div class="card-title">2. Visualiza Oportunidade</div>
+                <div class="card-desc">Acompanha as demandas abertas pelas instituições de saúde.</div>
+            </div>
+        </div>
+
+        <!-- ETAPA 4: O Match -->
+        <div class="flow-row">
+            <div class="card gestor">
+                <i class="fa-solid fa-handshake-angle card-icon"></i>
+                <div class="card-title">4. Compara e Aprova</div>
+                <div class="card-desc">Pesquisa, compara as propostas (preço/prazo) e confirma o pedido (RF-05, 09, 12).</div>
+            </div>
+            
+            <div class="connector left"><i class="fa-solid fa-arrow-left-long"></i></div>
+            
+            <div class="card hosply">
+                <i class="fa-solid fa-scale-balanced card-icon"></i>
+                <div class="card-title">O Match Logístico</div>
+                <div class="card-desc">Organiza as propostas e consolida o aceite do hospital.</div>
+            </div>
+            
+            <div class="connector left"><i class="fa-solid fa-arrow-left-long"></i></div>
+            
+            <div class="card fornecedor">
+                <i class="fa-solid fa-file-invoice-dollar card-icon"></i>
+                <div class="card-title">3. Envia Proposta</div>
+                <div class="card-desc">Informa disponibilidade e cadastra proposta formal (RF-07, 08).</div>
+            </div>
+        </div>
+
+        <!-- ETAPA 5: A Logística -->
+        <div class="flow-row">
+            <div class="card gestor">
+                <i class="fa-solid fa-map-location-dot card-icon"></i>
+                <div class="card-title">5. Acompanha Entrega</div>
+                <div class="card-desc">Rastreia o pedido: solicitado, processando, em transporte e concluído.</div>
+            </div>
+            
+            <div class="connector hosply-left"><i class="fa-solid fa-arrow-left-long"></i></div>
+            
+            <div class="card hosply">
+                <i class="fa-solid fa-route card-icon"></i>
+                <div class="card-title">Rastreamento Visual</div>
+                <div class="card-desc">Atualiza o status visual do pedido em tempo real (RF-11).</div>
+            </div>
+            
+            <div class="connector left"><i class="fa-solid fa-arrow-left-long"></i></div>
+            
+            <div class="card fornecedor">
+                <i class="fa-solid fa-box-open card-icon"></i>
+                <div class="card-title">4. Atualiza Status</div>
+                <div class="card-desc">Atualiza as etapas logísticas à medida que a entrega avança (RF-11).</div>
+            </div>
+        </div>
+
+        <!-- ETAPA 6: Encerramento -->
+        <div class="flow-row">
+            <div class="card gestor">
+                <i class="fa-solid fa-star card-icon"></i>
+                <div class="card-title">6. Avalia e Favorita</div>
+                <div class="card-desc">Finaliza o ciclo avaliando o fornecedor e pode salvá-lo como favorito (RF-14, 15).</div>
+            </div>
+            
+            <div class="connector right"><i class="fa-solid fa-arrow-right-long"></i></div>
+            
+            <div class="card hosply">
+                <i class="fa-solid fa-clipboard-check card-icon"></i>
+                <div class="card-title">Ciclo Concluído</div>
+                <div class="card-desc">Alimenta o ranking de fornecedores e atualiza o estoque automaticamente.</div>
+            </div>
+            
+            <div class="connector empty"></div>
+            <div class="card empty"></div>
+        </div>
+
+    </div>
+
+</body>
+</html>
