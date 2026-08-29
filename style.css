@@ -54,7 +54,7 @@ header p {
 .flow-container {
     display: grid;
     grid-template-columns: 340px 40px 340px 40px 340px;
-    gap: 15px 20px;
+    gap: 10px 15px;
     align-items: center;
     max-width: 1250px;
 }
@@ -66,7 +66,7 @@ header p {
     text-transform: uppercase;
     text-align: center;
     letter-spacing: 1.2px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,7 +83,7 @@ header p {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 15px 0;
+    margin: 15px 0 5px 0;
     color: var(--cyan-glow);
     font-weight: 600;
     letter-spacing: 2px;
@@ -189,7 +189,6 @@ header p {
 /* ========================================= */
 @media (max-width: 1024px) {
     
-    /* Legenda Mobile com visual de "Caixa/Painel" */
     .mobile-legend { 
         display: flex; 
         justify-content: center;
@@ -198,7 +197,7 @@ header p {
         padding: 12px 24px;
         border-radius: 12px;
         border: 1px solid #1f2937;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
         width: 100%;
         max-width: 320px;
         box-sizing: border-box;
@@ -215,15 +214,15 @@ header p {
 
     .flow-container { 
         grid-template-columns: 1fr; 
-        gap: 10px; 
+        gap: 6px; /* Mantém os itens da mesma fase colados */
     }
     
     .col-title { display: none; }
     
-    /* BLOCO DE FASE REFORMULADO PARA O MOBILE */
+    /* BLOCO DE FASE - MAIS ESPAÇO ENTRE FASES */
     .phase-divider {
-        margin-top: 50px; 
-        margin-bottom: 25px;
+        margin-top: 60px; /* Cria um "respiro" grande antes de iniciar nova fase */
+        margin-bottom: 10px; /* Cola o título no primeiro card da fase */
         background: rgba(0, 212, 255, 0.08); 
         padding: 12px;
         border-radius: 8px;
@@ -232,26 +231,28 @@ header p {
         box-sizing: border-box;
     }
     
+    /* Tira o buraco gigante da Fase 1, já que ela fica logo abaixo da legenda */
+    .phase-divider:first-of-type {
+        margin-top: 20px;
+    }
+    
     .phase-divider::before, .phase-divider::after { display: none; }
 
-    /* Correção das SETAS para o Mobile (Lógica Real do Fluxograma) */
+    /* Setas coladas no mobile */
     .arrow { 
         display: flex; 
-        margin: 10px 0;
+        margin: 2px 0; 
     }
     
     .arrow i {
-        /* Girando exatamente 90 graus, a seta da direita vira para BAIXO, 
-           e a seta da esquerda vira para CIMA. Perfeito! */
         transform: rotate(90deg); 
     }
     
-    /* Transforma os cards para leitura vertical */
     .card { 
         height: auto; 
         text-align: left !important; 
         align-items: flex-start !important; 
-        margin-bottom: 10px; 
+        margin-bottom: 0px; 
         border-top-width: 1px; 
         border-left-width: 4px;
     }
