@@ -194,10 +194,10 @@ header p {
         display: flex; 
         justify-content: center;
         gap: 20px;
-        background-color: var(--card-bg); /* Fundo escuro */
+        background-color: var(--card-bg);
         padding: 12px 24px;
-        border-radius: 12px; /* Bordas arredondadas */
-        border: 1px solid #1f2937; /* Borda discreta */
+        border-radius: 12px;
+        border: 1px solid #1f2937;
         margin-bottom: 30px;
         width: 100%;
         max-width: 320px;
@@ -218,19 +218,33 @@ header p {
         gap: 10px; 
     }
     
-    .col-title { display: none; } /* Oculta títulos do desktop */
+    .col-title { display: none; }
     
-    /* Mantém as setas, mas faz apontarem para baixo entre os cards */
-    .arrow { 
-        display: flex; 
-        margin: 5px 0;
-    }
-    
-    .arrow i {
-        transform: rotate(90deg); /* Vira a seta para baixo */
+    /* BLOCO DE FASE REFORMULADO PARA O MOBILE */
+    .phase-divider {
+        margin-top: 50px; 
+        margin-bottom: 25px;
+        background: rgba(0, 212, 255, 0.08); 
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px dashed rgba(0, 212, 255, 0.3); 
+        width: 100%;
+        box-sizing: border-box;
     }
     
     .phase-divider::before, .phase-divider::after { display: none; }
+
+    /* Correção das SETAS para o Mobile (Lógica Real do Fluxograma) */
+    .arrow { 
+        display: flex; 
+        margin: 10px 0;
+    }
+    
+    .arrow i {
+        /* Girando exatamente 90 graus, a seta da direita vira para BAIXO, 
+           e a seta da esquerda vira para CIMA. Perfeito! */
+        transform: rotate(90deg); 
+    }
     
     /* Transforma os cards para leitura vertical */
     .card { 
@@ -239,7 +253,7 @@ header p {
         align-items: flex-start !important; 
         margin-bottom: 10px; 
         border-top-width: 1px; 
-        border-left-width: 4px; /* Move a borda colorida para a lateral */
+        border-left-width: 4px;
     }
 
     .card-purple { border-left-color: var(--purple-glow); }
